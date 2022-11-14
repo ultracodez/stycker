@@ -1,4 +1,4 @@
-const Logo = ({ className = '', ...props }) => (
+/*const Logo = ({ className = '', ...props }) => (
   <svg
     width="32"
     height="32"
@@ -16,6 +16,17 @@ const Logo = ({ className = '', ...props }) => (
       fill="black"
     />
   </svg>
+);
+
+export default Logo;
+*/
+/* */
+
+import Image from 'next/image';
+import stycker from '../../public/stycker_dark.svg';
+
+const Logo = ({ className = '', ...props }) => (
+  <Image height="32" width="155.5" src={stycker} />
 );
 
 export default Logo;
