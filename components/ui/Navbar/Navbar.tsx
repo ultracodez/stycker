@@ -33,7 +33,7 @@ const Navbar = () => {
             <Link href="/">
               <a className={s.logo} aria-label="Logo">
                 <ColorLogo
-                  style={{ paddingTop: 6 }}
+                  style={{ paddingTop: '6px' }}
                   height={'30'}
                   width="120"
                 />
