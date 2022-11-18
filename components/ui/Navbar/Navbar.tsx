@@ -5,14 +5,25 @@ import Logo from 'components/icons/Logo';
 import { useRouter } from 'next/router';
 import { useUser } from 'utils/useUser';
 import { useSupabaseClient } from '@supabase/auth-helpers-react';
+import ColorLogo from '@/components/icons/ColorLogo';
+import { createStyles } from '@mantine/core';
+
+const useStyles = createStyles((theme) => ({
+  navbar: {
+    borderBottom: `1px solid ${
+      theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2]
+    }`
+  }
+}));
 
 const Navbar = () => {
+  const { classes } = useStyles();
   const router = useRouter();
   const supabaseClient = useSupabaseClient();
   const { user } = useUser();
 
   return (
-    <nav className={s.root}>
+    <nav className={classes.navbar}>
       <a href="#skip" className="sr-only focus:not-sr-only">
         Skip to content
       </a>
@@ -21,7 +32,11 @@ const Navbar = () => {
           <div className="flex flex-1 items-center">
             <Link href="/">
               <a className={s.logo} aria-label="Logo">
-                <Logo />
+                <ColorLogo
+                  style={{ paddingTop: 6 }}
+                  height={'30'}
+                  width="120"
+                />
               </a>
             </Link>
             <nav className="space-x-2 ml-6 hidden lg:block">

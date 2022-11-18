@@ -1,3 +1,3 @@
-export default function PricingPage() {
-  return;
+export default function IndexPage() {
+  return <></>;
 }

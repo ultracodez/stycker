@@ -11,6 +11,21 @@ interface Props {
   meta?: PageMeta;
 }
 
+const footerLinks = [
+  {
+    link: '/contact',
+    label: 'Contact'
+  },
+  {
+    link: '/about',
+    label: 'About'
+  },
+  {
+    link: '/',
+    label: 'Home'
+  }
+];
+
 export default function Layout({ children, meta: pageMeta }: Props) {
   const router = useRouter();
   const meta = {
@@ -27,7 +42,10 @@ export default function Layout({ children, meta: pageMeta }: Props) {
         <meta name="robots" content="follow, index" />
         <link href="/favicon.ico" rel="shortcut icon" />
         <meta content={meta.description} name="description" />
-        <meta property="og:url" content={`https://subscription-starter.vercel.app${router.asPath}`} />
+        <meta
+          property="og:url"
+          content={`https://subscription-starter.vercel.app${router.asPath}`}
+        />
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content={meta.title} />
         <meta property="og:description" content={meta.description} />
@@ -41,7 +59,17 @@ export default function Layout({ children, meta: pageMeta }: Props) {
       </Head>
       <Navbar />
       <main id="skip">{children}</main>
-      <Footer />
+      <Footer links={footerLinks} style={{ visibility: 'hidden' }} />
+      <Footer
+        links={footerLinks}
+        style={{
+          bottom: 0,
+          left: 0,
+          right: 0,
+          position: 'absolute',
+          width: '100%'
+        }}
+      />
     </>
   );
 }
