@@ -5,6 +5,7 @@ import { SimpleGrid, LoadingOverlay } from '@mantine/core';
 import { useSupabaseClient } from '@supabase/auth-helpers-react';
 import { title } from 'process';
 import { useEffect, useState } from 'react';
+import StackGrid from 'react-stack-grid';
 
 export default function IndexPage() {
   const [isLoading, setIsLoading] = useState(false);
@@ -35,19 +36,24 @@ export default function IndexPage() {
 
   return (
     <>
-      <SimpleGrid cols={5} sx={{ position: 'relative' }}>
-        <LoadingOverlay visible={isLoading} />
-        <StyckerCard badge={{ text: 'wow', color: 'pink' }} />
-        <StyckerCard />
-        <StyckerCard />
-        <StyckerCard />
-        <StyckerCard />
-        <StyckerCard />
-        <StyckerCard />
+      <StackGrid columnWidth={500} gutterWidth={20} gutterHeight={20}>
         {data.map((item) => {
           return <StyckerCard key={item.id} {...item} />;
         })}
-      </SimpleGrid>
+
+        {data.map((item) => {
+          return <StyckerCard key={item.id} {...item} />;
+        })}
+        {data.map((item) => {
+          return <StyckerCard key={item.id} {...item} />;
+        })}
+        {data.map((item) => {
+          return <StyckerCard key={item.id} {...item} />;
+        })}
+        {data.map((item) => {
+          return <StyckerCard key={item.id} {...item} />;
+        })}
+      </StackGrid>
     </>
   );
 }
