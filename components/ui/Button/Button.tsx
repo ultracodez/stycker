@@ -23,7 +23,6 @@ const Button = forwardRef<HTMLButtonElement, Props>((props, buttonRef) => {
     loading = false,
     disabled = false,
     style = {},
-    Component = 'button',
     ...rest
   } = props;
   const ref = useRef(null);
@@ -37,7 +36,7 @@ const Button = forwardRef<HTMLButtonElement, Props>((props, buttonRef) => {
     className
   );
   return (
-    <Component
+    <button
       aria-pressed={active}
       data-variant={variant}
       ref={mergeRefs([ref, buttonRef])}
@@ -55,7 +54,7 @@ const Button = forwardRef<HTMLButtonElement, Props>((props, buttonRef) => {
           <LoadingDots />
         </i>
       )}
-    </Component>
+    </button>
   );
 });
 
