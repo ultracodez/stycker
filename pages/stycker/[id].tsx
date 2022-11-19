@@ -75,38 +75,42 @@ const StyckerSpecific = () => {
           <Container sx={{ paddingTop: '2rem', position: 'relative' }}>
             <Breadcrumbs>{items}</Breadcrumbs>
             {data?.image?.src ? (
-              <Box sx={{ paddingTop: '2rem' }}>
+              <Center sx={{ paddingTop: '2rem' }}>
                 <Paper
-                  withBorder
+                  //  withBorder
                   sx={(theme) => ({
-                    /*backgroundImage: theme.fn.gradient({
-                    from: '#8338ec',
-                    to: theme.colorScheme === 'dark' ? '#C239ED' : '#3969ED',
-                    deg: 45
-                  }),*/
-                    borderWidth: '2px',
+                    backgroundImage: theme.fn.gradient({
+                      from:
+                        theme.colorScheme === 'dark' ? '#2D095F' : '#F6F1FE', //#8338ec
+                      to: theme.colorScheme === 'dark' ? '#2E053A' : '#F1F4FE', //'#C239ED' : '#3969ED'
+                      deg: 45
+                    }),
+                    width: '30rem',
+                    //borderWidth: '2px',
                     color: theme.white,
                     borderRadius: '1rem'
                   })}
                 >
-                  <AspectRatio
-                    ratio={16 / 9}
-                    sx={{ height: '20rem', width: '60rem' }}
-                    mx="auto"
-                  >
+                  <Box sx={{ maxHeight: '20rem', maxWidth: '30rem' }} mx="auto">
                     {data?.image ? (
-                      <Image
-                        layout="fill"
-                        src={data?.image?.src ?? ''}
-                        alt={
-                          data?.image?.alt ??
-                          'No description was provided for this image'
-                        }
-                      />
+                      <div
+                        style={{
+                          width: 'auto',
+                          height: '20rem',
+                          position: 'relative'
+                        }}
+                      >
+                        <Image
+                          alt="Mountains"
+                          src={data.image.src}
+                          layout="fill"
+                          objectFit="contain"
+                        />
+                      </div>
                     ) : undefined}
-                  </AspectRatio>
+                  </Box>
                 </Paper>
-              </Box>
+              </Center>
             ) : undefined}
             <Group position="apart">
               <h1>{data?.title}</h1>
@@ -149,3 +153,6 @@ const StyckerSpecific = () => {
 };
 
 export default StyckerSpecific;
+function convertRemToPixels(rem) {
+  return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
+}
