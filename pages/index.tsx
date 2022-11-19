@@ -33,7 +33,8 @@ export default function IndexPage() {
         badge: item.badge,
         image: { src: item.image, alt: item.imageAlt },
         link: item.link,
-        createdAt: new Date(item.created_at)
+        createdAt: new Date(item.created_at),
+        funding: item.funding_acquired
       });
     });
     setData(newData);
