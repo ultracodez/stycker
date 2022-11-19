@@ -32,7 +32,8 @@ export default function IndexPage() {
         callout: item.callout,
         badge: item.badge,
         image: { src: item.image, alt: item.imageAlt },
-        link: item.link
+        link: item.link,
+        createdAt: new Date(item.created_at)
       });
     });
     setData(newData);

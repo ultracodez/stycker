@@ -21,6 +21,7 @@ export interface StyckerCardProps {
   callout?: string;
   image?: StyckerImage;
   link: string;
+  createdAt: Date;
 }
 
 export interface StyckerImage {
@@ -75,6 +76,8 @@ export function StyckerCard(props: StyckerCardProps) {
 
         <Text size="sm" color="dimmed">
           {props.description}
+          <br />
+          <i>Created on {props.createdAt.toLocaleDateString()}</i>
         </Text>
 
         <Link href={props.link} passHref>
