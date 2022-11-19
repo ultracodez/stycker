@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import { useUser } from 'utils/useUser';
 import { useSupabaseClient } from '@supabase/auth-helpers-react';
 import ColorLogo from '@/components/icons/ColorLogo';
-import { createStyles } from '@mantine/core';
+import { Anchor, createStyles, useMantineColorScheme } from '@mantine/core';
 
 const useStyles = createStyles((theme) => ({
   navbar: {
@@ -21,30 +21,31 @@ const Navbar = () => {
   const router = useRouter();
   const supabaseClient = useSupabaseClient();
   const { user } = useUser();
+  const { colorScheme } = useMantineColorScheme();
 
   return (
     <nav className={classes.navbar}>
-      <a href="#skip" className="sr-only focus:not-sr-only">
+      <a href="#skip" tabIndex={10} className="sr-only focus:not-sr-only">
         Skip to content
       </a>
       <div className="pt-2 mx-auto max-w-6xl px-6">
         <div className="flex justify-between align-center flex-row py-4 md:py-6 relative">
           <div className="flex flex-1 items-center">
-            <Link href="/">
-              <a className={s.logo} aria-label="Logo">
+            <Link href="/" passHref>
+              <Anchor tabIndex={9} className={s.logo} aria-label="Logo">
                 <ColorLogo
                   style={{ marginTop: '2px' }}
                   height={'30'}
                   width="160"
                 />
-              </a>
+              </Anchor>
             </Link>
             <nav className="space-x-2 ml-6 hidden lg:block">
-              <Link href="/">
-                <a className={s.link}>Pricing</a>
+              <Link href="/" passHref>
+                <Anchor tabIndex={10}>Pricing</Anchor>
               </Link>
-              <Link href="/account">
-                <a className={s.link}>Account</a>
+              <Link href="/account" passHref>
+                <Anchor tabIndex={10}>Account</Anchor>
               </Link>
             </nav>
           </div>
@@ -52,6 +53,7 @@ const Navbar = () => {
           <div className="flex flex-1 justify-end space-x-8">
             {user ? (
               <span
+                tabIndex={9}
                 className={s.link}
                 onClick={async () => {
                   await supabaseClient.auth.signOut();
@@ -61,8 +63,10 @@ const Navbar = () => {
                 Sign out
               </span>
             ) : (
-              <Link href="/signin">
-                <a className={s.link}>Sign in</a>
+              <Link tabIndex={9} href="/signin" passHref>
+                <Anchor tabIndex={10} component="a">
+                  Sign in
+                </Anchor>
               </Link>
             )}
           </div>

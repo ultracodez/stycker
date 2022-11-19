@@ -4,8 +4,11 @@ import {
   Group,
   Anchor,
   useMantineColorScheme,
-  Box
+  Box,
+  Button,
+  ActionIcon
 } from '@mantine/core';
+import { IconMoonStars, IconSun } from '@tabler/icons';
 import Image from 'next/image';
 import Link from 'next/link';
 import styckerDark from '../../../public/stycker_dark.svg';
@@ -44,7 +47,7 @@ interface FooterSimpleProps {
 }
 
 export default function FooterSimple({ links, style }: FooterSimpleProps) {
-  const { colorScheme } = useMantineColorScheme();
+  const { colorScheme, toggleColorScheme } = useMantineColorScheme();
   const { classes } = useStyles();
   const items = links?.map((link) => (
     <Link key={link.label} href={link.link} passHref>
@@ -65,6 +68,20 @@ export default function FooterSimple({ links, style }: FooterSimpleProps) {
           />
         </Box>
         <Group className={classes.links}>{items}</Group>
+        <ActionIcon
+          variant="subtle"
+          color={colorScheme === 'dark' ? 'yellow' : 'blue'}
+          size={'md'}
+          onClick={() => {
+            toggleColorScheme();
+          }}
+        >
+          {colorScheme === 'dark' ? (
+            <IconSun size={20} />
+          ) : (
+            <IconMoonStars size={20} />
+          )}
+        </ActionIcon>
       </Container>
     </div>
   );

@@ -3,13 +3,14 @@ import { useRouter } from 'next/router';
 import { useEffect, useState, FormEvent } from 'react';
 import { useUser, useSupabaseClient } from '@supabase/auth-helpers-react';
 
-import Button from 'components/ui/Button';
 import GitHub from 'components/icons/GitHub';
 import Input from 'components/ui/Input';
 import LoadingDots from 'components/ui/LoadingDots';
 import Logo from 'components/icons/Logo';
 import { Provider } from '@supabase/supabase-js';
 import { getURL } from '@/utils/helpers';
+import ColorLogo from '@/components/icons/ColorLogo';
+import { TextInput, Button, Anchor, Text, PasswordInput } from '@mantine/core';
 
 const SignIn = () => {
   const [email, setEmail] = useState('');
@@ -79,7 +80,7 @@ const SignIn = () => {
       <div className="flex justify-center height-screen-helper">
         <div className="flex flex-col justify-between max-w-lg p-3 m-auto w-80 ">
           <div className="flex justify-center pb-12 ">
-            <Logo width="64px" height="64px" />
+            <ColorLogo />
           </div>
           <div className="flex flex-col space-y-4">
             {message.content && (
@@ -98,12 +99,15 @@ const SignIn = () => {
 
             {!showPasswordInput && (
               <form onSubmit={handleSignin} className="flex flex-col space-y-4">
-                <Input
+                <TextInput
                   type="email"
                   placeholder="Email"
                   value={email}
-                  onChange={setEmail}
+                  onChange={(e) => {
+                    setEmail(e.currentTarget.value);
+                  }}
                   required
+                  withAsterisk
                 />
                 <Button
                   variant="slim"
@@ -118,23 +122,26 @@ const SignIn = () => {
 
             {showPasswordInput && (
               <form onSubmit={handleSignin} className="flex flex-col space-y-4">
-                <Input
+                <TextInput
                   type="email"
                   placeholder="Email"
                   value={email}
-                  onChange={setEmail}
+                  onChange={(e) => {
+                    setEmail(e.currentTarget.value);
+                  }}
                   required
                 />
-                <Input
+                <PasswordInput
                   type="password"
                   placeholder="Password"
                   value={password}
-                  onChange={setPassword}
+                  onChange={(e) => {
+                    setPassword(e.currentTarget.value);
+                  }}
                   required
                 />
                 <Button
                   className="mt-1"
-                  variant="slim"
                   type="submit"
                   loading={loading}
                   disabled={!password.length || !email.length}
@@ -145,9 +152,8 @@ const SignIn = () => {
             )}
 
             <span className="pt-1 text-center text-sm">
-              <a
+              <Anchor
                 href="#"
-                className="text-zinc-200 text-accent-9 hover:underline cursor-pointer"
                 onClick={() => {
                   if (showPasswordInput) setPassword('');
                   setShowPasswordInput(!showPasswordInput);
@@ -156,18 +162,17 @@ const SignIn = () => {
               >
                 {`Or sign in with ${
                   showPasswordInput ? 'magic link' : 'password'
-                }.`}
-              </a>
+                }`}
+              </Anchor>
             </span>
 
             <span className="pt-1 text-center text-sm">
-              <span className="text-zinc-200">Don't have an account?</span>
-              {` `}
-              <Link href="/signup">
-                <a className="text-accent-9 font-bold hover:underline cursor-pointer">
-                  Sign up.
-                </a>
-              </Link>
+              <Text>
+                Don't have an account?
+                <Link href="/signup" passHref>
+                  <Anchor> Sign up.</Anchor>
+                </Link>
+              </Text>
             </span>
           </div>
 
@@ -184,7 +189,6 @@ const SignIn = () => {
           </div>
 
           <Button
-            variant="slim"
             type="submit"
             disabled={loading}
             onClick={() => handleOAuthSignIn('github')}

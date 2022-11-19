@@ -4,10 +4,16 @@ import {
   AspectRatio,
   Box,
   Breadcrumbs,
+  Button,
   Center,
   Container,
+  Group,
   LoadingOverlay,
-  Paper
+  Paper,
+  Spoiler,
+  Text,
+  ThemeIcon,
+  useMantineColorScheme
 } from '@mantine/core';
 import { useSupabaseClient } from '@supabase/auth-helpers-react';
 import { NextPage } from 'next';
@@ -15,6 +21,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { IconCash } from '@tabler/icons';
 
 const StyckerSpecific = () => {
   const router = useRouter();
@@ -23,6 +30,7 @@ const StyckerSpecific = () => {
   const supabaseClient = useSupabaseClient();
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState<StyckerCardProps | undefined>(undefined);
+  const { colorScheme } = useMantineColorScheme();
 
   const items = [
     { title: 'styckers', href: '/styckers' },
@@ -66,26 +74,22 @@ const StyckerSpecific = () => {
         id && (
           <Container sx={{ paddingTop: '2rem', position: 'relative' }}>
             <Breadcrumbs>{items}</Breadcrumbs>
-            <Box sx={{ paddingTop: '2rem' }}>
-              <Paper
-                sx={(theme) => ({
-                  height: '22rem',
-                  backgroundImage: theme.fn.gradient({
+            {data?.image?.src ? (
+              <Box sx={{ paddingTop: '2rem' }}>
+                <Paper
+                  withBorder
+                  sx={(theme) => ({
+                    /*backgroundImage: theme.fn.gradient({
                     from: '#8338ec',
                     to: theme.colorScheme === 'dark' ? '#C239ED' : '#3969ED',
                     deg: 45
-                  }),
-                  color: theme.white,
-                  borderRadius: '1rem'
-                })}
-              >
-                <Box sx={{ paddingTop: '1rem' }}>
-                  <AspectRatio
-                    ratio={16 / 9}
-                    sx={{
-                      height: '20rem'
-                    }}
-                  >
+                  }),*/
+                    borderWidth: '2px',
+                    color: theme.white,
+                    borderRadius: '1rem'
+                  })}
+                >
+                  <AspectRatio ratio={16 / 9} sx={{ height: '20rem' }}>
                     {data?.image ? (
                       <Image
                         layout="fill"
@@ -97,11 +101,42 @@ const StyckerSpecific = () => {
                       />
                     ) : undefined}
                   </AspectRatio>
-                </Box>
-              </Paper>
-            </Box>
-            <h1>{data?.title}</h1>
-            <p>{data?.description}</p>
+                </Paper>
+              </Box>
+            ) : undefined}
+            <Group position="apart">
+              <h1>{data?.title}</h1>
+
+              <Button
+                color={colorScheme === 'dark' ? 'teal.4' : 'teal.6'}
+                sx={(theme) => ({
+                  color:
+                    theme.colorScheme === 'dark'
+                      ? theme.colors.dark[7]
+                      : '#FFFFFF'
+                })}
+              >
+                Sponsor This Stycker
+              </Button>
+            </Group>
+            <Group position="apart">
+              <Spoiler maxHeight={120} showLabel="Show more" hideLabel="Hide">
+                {/* Content here */}
+                <p>{data?.description}</p>
+              </Spoiler>
+              <Text c={colorScheme === 'dark' ? 'teal.4' : 'teal.6'}>
+                <Center>
+                  <ThemeIcon
+                    sx={{ marginRight: '4px' }}
+                    variant="light"
+                    color={colorScheme === 'dark' ? 'teal.4' : 'teal.6'}
+                  >
+                    <IconCash />
+                  </ThemeIcon>
+                  ${data?.funding}
+                </Center>
+              </Text>
+            </Group>
           </Container>
         )
       }

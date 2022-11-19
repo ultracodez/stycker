@@ -4,10 +4,9 @@ import { useEffect, useState, FormEvent } from 'react';
 import { User } from '@supabase/supabase-js';
 import { useUser, useSupabaseClient } from '@supabase/auth-helpers-react';
 
-import Button from 'components/ui/Button';
-import Input from 'components/ui/Input';
-import Logo from 'components/icons/Logo';
 import { updateUserName } from 'utils/supabase-client';
+import { Anchor, Button, PasswordInput, Text, TextInput } from '@mantine/core';
+import ColorLogo from '@/components/icons/ColorLogo';
 
 const SignUp = () => {
   const supabaseClient = useSupabaseClient();
@@ -61,7 +60,7 @@ const SignUp = () => {
     <div className="flex justify-center height-screen-helper">
       <div className="flex flex-col justify-between max-w-lg p-3 m-auto w-80 ">
         <div className="flex justify-center pb-12 ">
-          <Logo width="64px" height="64px" />
+          <ColorLogo />
         </div>
         <form onSubmit={handleSignup} className="flex flex-col space-y-4">
           {message.content && (
@@ -77,21 +76,29 @@ const SignUp = () => {
               {message.content}
             </div>
           )}
-          <Input placeholder="Name" onChange={setName} />
-          <Input
+          <TextInput
+            placeholder="Name"
+            onChange={(e) => {
+              setName(e.currentTarget.value);
+            }}
+          />
+          <TextInput
             type="email"
             placeholder="Email"
-            onChange={setEmail}
+            onChange={(e) => {
+              setEmail(e.currentTarget.value);
+            }}
             required
           />
-          <Input
+          <PasswordInput
             type="password"
             placeholder="Password"
-            onChange={setPassword}
+            onChange={(e) => {
+              setPassword(e.currentTarget.value);
+            }}
           />
           <div className="pt-2 w-full flex flex-col">
             <Button
-              variant="slim"
               type="submit"
               loading={loading}
               disabled={loading || !email.length || !password.length}
@@ -101,13 +108,12 @@ const SignUp = () => {
           </div>
 
           <span className="pt-1 text-center text-sm">
-            <span className="text-zinc-200">Do you have an account?</span>
-            {` `}
-            <Link href="/signin">
-              <a className="text-accent-9 font-bold hover:underline cursor-pointer">
-                Sign in.
-              </a>
-            </Link>
+            <Text>
+              Do you have an account?
+              <Link href="/signin">
+                <Anchor> Sign in.</Anchor>
+              </Link>
+            </Text>
           </span>
         </form>
       </div>
