@@ -27,15 +27,15 @@ const Navbar = () => {
       <a href="#skip" className="sr-only focus:not-sr-only">
         Skip to content
       </a>
-      <div className="mx-auto max-w-6xl px-6">
+      <div className="pt-2 mx-auto max-w-6xl px-6">
         <div className="flex justify-between align-center flex-row py-4 md:py-6 relative">
           <div className="flex flex-1 items-center">
             <Link href="/">
               <a className={s.logo} aria-label="Logo">
                 <ColorLogo
-                  style={{ paddingTop: '6px' }}
+                  style={{ marginTop: '2px' }}
                   height={'30'}
-                  width="120"
+                  width="160"
                 />
               </a>
             </Link>

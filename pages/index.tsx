@@ -31,7 +31,8 @@ export default function IndexPage() {
         description: item.description,
         callout: item.callout,
         badge: item.badge,
-        image: { src: item.image, alt: item.imageAlt }
+        image: { src: item.image, alt: item.imageAlt },
+        link: item.link
       });
     });
     setData(newData);
@@ -44,10 +45,10 @@ export default function IndexPage() {
   return (
     <>
       <Paper>
-        <Group position="apart" className="px-10 py-4">
+        <Group position="apart" className="px-32 py-4">
           <Group>
             <NativeSelect
-              data={['React', 'Vue', 'Angular', 'Svelte']}
+              data={['Upload Date', 'Funding', 'Upvotes', 'Views']}
               radius="xl"
             />
           </Group>

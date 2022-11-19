@@ -7,8 +7,10 @@ import {
   Group,
   MantineColor,
   BadgeVariant,
-  AspectRatio
+  AspectRatio,
+  MANTINE_COLORS
 } from '@mantine/core';
+import Link from 'next/link';
 
 export interface StyckerCardProps {
   id?: any;
@@ -18,6 +20,7 @@ export interface StyckerCardProps {
   modifiers?: StyckerModifier[];
   callout?: string;
   image?: StyckerImage;
+  link: string;
 }
 
 export interface StyckerImage {
@@ -45,37 +48,52 @@ export interface StyckerCardBadge {
 
 export function StyckerCard(props: StyckerCardProps) {
   return (
-    <Card shadow="sm" p="lg" radius="md" withBorder>
-      <Card.Section>
-        {props.image && props.image.src ? (
-          <AspectRatio style={{ height: 400 }} ratio={16 / 9}>
-            <Image
-              src={props.image.src}
-              alt={props.image.alt ?? 'No image description provided'}
-            />
-          </AspectRatio>
-        ) : undefined}
-      </Card.Section>
+    <Link href={`/stycker/${props.id}`} passHref>
+      <Card shadow="sm" p="lg" radius="md" component="a" withBorder>
+        <Card.Section>
+          {props.image && props.image.src ? (
+            <AspectRatio style={{ height: 400 }} ratio={16 / 9}>
+              <Image
+                src={props.image.src}
+                alt={props.image.alt ?? 'No image description provided'}
+              />
+            </AspectRatio>
+          ) : undefined}
+        </Card.Section>
 
-      <Group position="apart" mt="md" mb="xs">
-        <Text weight={500}>{props.title}</Text>
-        {props.badge ? (
-          <Badge
-            color={props.badge.color}
-            variant={props.badge.variant ?? 'light'}
+        <Group position="apart" mt="md" mb="xs">
+          <Text weight={500}>{props.title}</Text>
+          {props.badge ? (
+            <Badge
+              color={props.badge.color}
+              variant={props.badge.variant ?? 'light'}
+            >
+              {props.badge.text}
+            </Badge>
+          ) : undefined}
+        </Group>
+
+        <Text size="sm" color="dimmed">
+          {props.description}
+        </Text>
+
+        <Link href={props.link} passHref>
+          <Button
+            component="a"
+            variant="light"
+            color={
+              MANTINE_COLORS[
+                Math.floor(Math.random() * (MANTINE_COLORS.length - 0))
+              ]
+            }
+            fullWidth
+            mt="md"
+            radius="md"
           >
-            {props.badge.text}
-          </Badge>
-        ) : undefined}
-      </Group>
-
-      <Text size="sm" color="dimmed">
-        {props.description}
-      </Text>
-
-      <Button variant="light" color="blue" fullWidth mt="md" radius="md">
-        {props.callout ?? 'Go'}
-      </Button>
-    </Card>
+            {props.callout ?? 'Go'}
+          </Button>
+        </Link>
+      </Card>
+    </Link>
   );
 }
