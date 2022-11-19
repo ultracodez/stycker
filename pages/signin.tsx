@@ -110,7 +110,6 @@ const SignIn = () => {
                   withAsterisk
                 />
                 <Button
-                  variant="slim"
                   type="submit"
                   loading={loading}
                   disabled={!email.length}

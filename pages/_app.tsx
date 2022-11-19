@@ -29,7 +29,7 @@ export default function App({
   Component,
   pageProps,
   ...props
-}: AppProps & { colorScheme: ColorScheme }) {
+}: any & { colorScheme: ColorScheme }) {
   const [supabaseClient] = useState(() =>
     createBrowserSupabaseClient<Database>()
   );
