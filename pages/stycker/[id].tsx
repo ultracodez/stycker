@@ -89,7 +89,11 @@ const StyckerSpecific = () => {
                     borderRadius: '1rem'
                   })}
                 >
-                  <AspectRatio ratio={16 / 9} sx={{ height: '20rem' }}>
+                  <AspectRatio
+                    ratio={16 / 9}
+                    sx={{ height: '20rem', width: '60rem' }}
+                    mx="auto"
+                  >
                     {data?.image ? (
                       <Image
                         layout="fill"

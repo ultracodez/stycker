@@ -8,7 +8,8 @@ import {
   MantineColor,
   BadgeVariant,
   AspectRatio,
-  MANTINE_COLORS
+  MANTINE_COLORS,
+  Spoiler
 } from '@mantine/core';
 import Link from 'next/link';
 
@@ -20,7 +21,7 @@ export interface StyckerCardProps {
   modifiers?: StyckerModifier[];
   callout?: string;
   image?: StyckerImage;
-  link: string;
+  link?: string;
   createdAt: Date;
   funding?: number;
 }
@@ -76,27 +77,31 @@ export function StyckerCard(props: StyckerCardProps) {
         </Group>
 
         <Text size="sm" color="dimmed">
-          {props.description}
+          <Spoiler maxHeight={110} showLabel="Show more" hideLabel="Hide">
+            {props.description}
+          </Spoiler>
           <br />
           <i>Created on {props.createdAt.toLocaleDateString()}</i>
         </Text>
 
-        <Link href={props.link} passHref>
-          <Button
-            component="a"
-            variant="light"
-            color={
-              MANTINE_COLORS[
-                Math.floor(Math.random() * (MANTINE_COLORS.length - 0))
-              ]
-            }
-            fullWidth
-            mt="md"
-            radius="md"
-          >
-            {props.callout ?? 'Go'}
-          </Button>
-        </Link>
+        {props.link ? (
+          <Link href={props.link} passHref>
+            <Button
+              component="a"
+              variant="light"
+              color={
+                MANTINE_COLORS[
+                  Math.floor(Math.random() * (MANTINE_COLORS.length - 0))
+                ]
+              }
+              fullWidth
+              mt="md"
+              radius="md"
+            >
+              {props.callout ?? 'Go'}
+            </Button>
+          </Link>
+        ) : undefined}
       </Card>
     </Link>
   );

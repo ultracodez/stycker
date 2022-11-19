@@ -63,19 +63,6 @@ export default function IndexPage() {
         {data.map((item) => {
           return <StyckerCard key={item.id} {...item} />;
         })}
-
-        {data.map((item) => {
-          return <StyckerCard key={item.id} {...item} />;
-        })}
-        {data.map((item) => {
-          return <StyckerCard key={item.id} {...item} />;
-        })}
-        {data.map((item) => {
-          return <StyckerCard key={item.id} {...item} />;
-        })}
-        {data.map((item) => {
-          return <StyckerCard key={item.id} {...item} />;
-        })}
       </StackGrid>
     </>
   );
