@@ -6,7 +6,8 @@ import {
   Button,
   Group,
   MantineColor,
-  BadgeVariant
+  BadgeVariant,
+  AspectRatio
 } from '@mantine/core';
 
 export interface StyckerCardProps {
@@ -47,11 +48,12 @@ export function StyckerCard(props: StyckerCardProps) {
     <Card shadow="sm" p="lg" radius="md" withBorder>
       <Card.Section>
         {props.image && props.image.src ? (
-          <Image
-            src={props.image.src}
-            height={160}
-            alt={props.image.alt ?? 'No image description provided'}
-          />
+          <AspectRatio style={{ height: 400 }} ratio={16 / 9}>
+            <Image
+              src={props.image.src}
+              alt={props.image.alt ?? 'No image description provided'}
+            />
+          </AspectRatio>
         ) : undefined}
       </Card.Section>
 
