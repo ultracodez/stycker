@@ -24,7 +24,7 @@
     "@mantine/prism": "^5.8.0",
     "@mantine/spotlight": "^5.8.0",
     "@mantine/tiptap": "^5.8.0",
-    "@stripe/stripe-js": "1.22.0",
+    "@stripe/stripe-js": "^1.44.1",
     "@supabase/auth-helpers-nextjs": "^0.4.0",
     "@supabase/auth-helpers-react": "^0.3.0",
     "@supabase/supabase-js": "^2.0.0",

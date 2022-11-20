@@ -193,7 +193,10 @@ const StyckerSpecific = () => {
                     Promote
                   </Menu.Item>
 
-                  <Menu.Item icon={<IconReceipt2 size={16} />}>
+                  <Menu.Item
+                    onClick={() => {}}
+                    icon={<IconReceipt2 size={16} />}
+                  >
                     Donate
                   </Menu.Item>
                 </Menu.Dropdown>
