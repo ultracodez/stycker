@@ -6,7 +6,12 @@ import { useRouter } from 'next/router';
 import { useUser } from 'utils/useUser';
 import { useSupabaseClient } from '@supabase/auth-helpers-react';
 import ColorLogo from '@/components/icons/ColorLogo';
-import { Anchor, createStyles, useMantineColorScheme } from '@mantine/core';
+import {
+  Anchor,
+  createStyles,
+  Group,
+  useMantineColorScheme
+} from '@mantine/core';
 
 const useStyles = createStyles((theme) => ({
   navbar: {
@@ -41,12 +46,18 @@ const Navbar = () => {
               </Anchor>
             </Link>
             <nav className="space-x-2 ml-6 hidden lg:block">
-              <Link href="/" passHref>
-                <Anchor tabIndex={10}>Pricing</Anchor>
-              </Link>
-              <Link href="/account" passHref>
-                <Anchor tabIndex={10}>Account</Anchor>
-              </Link>
+              <Group>
+                <Link href="/" passHref>
+                  <Anchor tabIndex={10}>Home</Anchor>
+                </Link>
+
+                <Link href="/account" passHref>
+                  <Anchor tabIndex={10}>Styckers</Anchor>
+                </Link>
+                <Link href="/account" passHref>
+                  <Anchor tabIndex={10}>Account</Anchor>
+                </Link>
+              </Group>
             </nav>
           </div>
 

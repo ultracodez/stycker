@@ -3,6 +3,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { formatAmountForStripe } from '../../../utils/stripe-helpers';
 
 import { stripe } from '../../../utils/stripe';
+import Stripe from 'stripe';
 
 export default async function handler(
   req: NextApiRequest,
@@ -17,16 +18,15 @@ export default async function handler(
       }
       // Create Checkout Sessions from body params.
       const params: Stripe.Checkout.SessionCreateParams = {
-        submit_type: 'donate',
+        submit_type: 'pay',
         payment_method_types: ['card'],
         line_items: [
           {
-            name: 'Custom amount donation',
-            amount: formatAmountForStripe(0.5, 'usd'),
-            currency: 'usd',
-            quantity: 1
+            quantity: 1,
+            price: 'price_1M64rbHWe6v5jzHMV8X0T6ha'
           }
         ],
+        mode: 'payment',
         success_url: `${req.headers.origin}/result?session_id={CHECKOUT_SESSION_ID}`,
         cancel_url: `${req.headers.origin}/donate-with-checkout`
       };

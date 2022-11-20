@@ -14,7 +14,7 @@ const CheckoutForm = () => {
   const [input, setInput] = useState({
     customDonation: Math.round(1)
   });
-  const [value, setValue] = useState(0.5);
+  const [value, setValue] = useState(1);
 
   const handleInputChange: React.ChangeEventHandler<HTMLInputElement> = (e) =>
     setInput({
