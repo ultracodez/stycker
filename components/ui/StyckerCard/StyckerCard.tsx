@@ -26,6 +26,7 @@ export interface StyckerCardProps {
   funding?: number;
   ownerId: any;
   interested?: any[];
+  stars: number;
 }
 
 export interface StyckerImage {

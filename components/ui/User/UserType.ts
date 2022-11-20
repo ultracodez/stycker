@@ -8,6 +8,7 @@ export default interface UserType {
   avatar_bg?: string;
   website?: string;
   bio?: string;
+  email: string;
 }
 interface UserData {
   job?: string;

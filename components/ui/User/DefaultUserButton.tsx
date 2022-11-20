@@ -5,11 +5,11 @@ import { UserButton } from './UserButton';
 import { UserCardImage } from './UserCardWithImage';
 import UserType from './UserType';
 
-interface DefaultUserCardImageProps {
+interface DefaultUserButtonProps {
   id: any;
 }
 
-export function DefaultUserCardImage({ id }: DefaultUserCardImageProps) {
+export function DefaultUserButton({ id }: DefaultUserButtonProps) {
   const [userData, setUserData] = useState<UserType | undefined>();
   const supabaseClient = useSupabaseClient();
 
@@ -27,7 +27,8 @@ export function DefaultUserCardImage({ id }: DefaultUserCardImageProps) {
         website: data.website,
         username: data.username,
         full_name: data.full_name,
-        avatar_bg: data.avatar_bg
+        avatar_bg: data.avatar_bg,
+        email: data.email
       });
   }
   useEffect(() => {
@@ -41,16 +42,17 @@ export function DefaultUserCardImage({ id }: DefaultUserCardImageProps) {
           name={userData.full_name || 'Unknown User'}
           image={
             userData.avatar_url ? (
-              <Image height={80} width={80} src={userData.avatar_url} />
+              <Image
+                style={{ borderRadius: '100rem' }}
+                height={80}
+                width={80}
+                src={userData.avatar_url}
+              />
             ) : (
               userData.full_name?.charAt(0) ?? 'N/A'
             )
           }
-          stats={[
-            { label: 'Joined' },
-            { label: 'Followers' },
-            { label: 'Styckers' }
-          ]}
+          email={userData.email}
         />
       ) : undefined}
     </>

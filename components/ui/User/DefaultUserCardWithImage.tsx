@@ -26,7 +26,8 @@ export function DefaultUserCardImage({ id }: DefaultUserCardImageProps) {
         website: data.website,
         username: data.username,
         full_name: data.full_name,
-        avatar_bg: data.avatar_bg
+        avatar_bg: data.avatar_bg,
+        email: data.email
       });
   }
   useEffect(() => {
@@ -41,7 +42,12 @@ export function DefaultUserCardImage({ id }: DefaultUserCardImageProps) {
           job={userData.data?.job}
           avatar={
             userData.avatar_url ? (
-              <Image height={80} width={80} src={userData.avatar_url} />
+              <Image
+                height={80}
+                width={80}
+                style={{ borderRadius: '100rem' }}
+                src={userData.avatar_url}
+              />
             ) : (
               userData.full_name?.charAt(0) ?? 'N/A'
             )

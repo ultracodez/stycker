@@ -35,7 +35,8 @@ export default function IndexPage() {
         link: item.link,
         createdAt: new Date(item.created_at),
         funding: item.funding_acquired,
-        ownerId: item.owner_id
+        ownerId: item.owner_id,
+        stars: item.stars
       });
     });
     setData(newData);

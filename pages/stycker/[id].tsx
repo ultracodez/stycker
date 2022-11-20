@@ -1,5 +1,6 @@
 import { StyckerCardProps } from '@/components/ui/StyckerCard/StyckerCard';
 import {
+  ActionIcon,
   Anchor,
   AspectRatio,
   Box,
@@ -9,6 +10,7 @@ import {
   Container,
   Group,
   LoadingOverlay,
+  Menu,
   Paper,
   SimpleGrid,
   Spoiler,
@@ -22,14 +24,33 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { IconCash } from '@tabler/icons';
+import {
+  IconArrowsLeftRight,
+  IconCash,
+  IconMessageCircle,
+  IconPhoto,
+  IconPointer,
+  IconReceipt,
+  IconReceipt2,
+  IconSearch,
+  IconSettings,
+  IconStar,
+  IconThumbUp,
+  IconTrash
+} from '@tabler/icons';
 import { UserCardImage } from '@/components/ui/User/UserCardWithImage';
 import { DefaultUserCardImage } from '@/components/ui/User/DefaultUserCardWithImage';
 import { mockData, UserButton } from '@/components/ui/User/UserButton';
+import { DefaultUserButton } from '@/components/ui/User/DefaultUserButton';
 
 const StyckerSpecific = () => {
   const router = useRouter();
   const { id } = router.query;
+
+  const [interested, setInterested] = useState(false);
+  const [starred, setStarred] = useState(false);
+  //const [, set] = useState(0);
+  //const [, set] = useState(0);
 
   const supabaseClient = useSupabaseClient();
   const [isLoading, setIsLoading] = useState(true);
@@ -64,7 +85,8 @@ const StyckerSpecific = () => {
       createdAt: new Date(item.created_at),
       funding: item.funding_acquired,
       ownerId: item.owner_id,
-      interested: item.interested
+      interested: item.interested,
+      stars: item.stars
     });
     setIsLoading(false);
   }
@@ -79,7 +101,38 @@ const StyckerSpecific = () => {
         // `id` is defined after hydrating client-side
         id && (
           <Container sx={{ paddingTop: '2rem', position: 'relative' }}>
-            <Breadcrumbs>{items}</Breadcrumbs>
+            <Group position="apart">
+              <Breadcrumbs>{items}</Breadcrumbs>
+              <Group>
+                <Center>
+                  <Button
+                    color="yellow"
+                    variant="subtle"
+                    compact
+                    onClick={() => {
+                      setStarred(!starred);
+                    }}
+                    leftIcon={<IconStar />}
+                  >
+                    {(data?.stars ?? 1) + (starred ? 1 : 0)}
+                  </Button>
+                </Center>
+
+                <Center>
+                  <Button
+                    color="indigo"
+                    variant="subtle"
+                    compact
+                    onClick={() => {
+                      setInterested(!interested);
+                    }}
+                    leftIcon={<IconPointer />}
+                  >
+                    {(data?.interested?.length ?? 1) + (interested ? 2 : 1)}
+                  </Button>
+                </Center>
+              </Group>
+            </Group>
             {data?.image?.src ? (
               <Center sx={{ paddingTop: '2rem' }}>
                 <Paper
@@ -120,18 +173,31 @@ const StyckerSpecific = () => {
             ) : undefined}
             <Group position="apart">
               <h1>{data?.title}</h1>
+              <Menu shadow="md" width={200}>
+                <Menu.Target>
+                  <Button
+                    color={colorScheme === 'dark' ? 'teal.4' : 'teal.6'}
+                    sx={(theme) => ({
+                      color:
+                        theme.colorScheme === 'dark'
+                          ? theme.colors.dark[7]
+                          : '#FFFFFF'
+                    })}
+                  >
+                    Sponsor This Stycker
+                  </Button>
+                </Menu.Target>
 
-              <Button
-                color={colorScheme === 'dark' ? 'teal.4' : 'teal.6'}
-                sx={(theme) => ({
-                  color:
-                    theme.colorScheme === 'dark'
-                      ? theme.colors.dark[7]
-                      : '#FFFFFF'
-                })}
-              >
-                Sponsor This Stycker
-              </Button>
+                <Menu.Dropdown>
+                  <Menu.Item icon={<IconThumbUp size={16} />}>
+                    Promote
+                  </Menu.Item>
+
+                  <Menu.Item icon={<IconReceipt2 size={16} />}>
+                    Donate
+                  </Menu.Item>
+                </Menu.Dropdown>
+              </Menu>
             </Group>
             <Group position="apart">
               <Spoiler maxHeight={120} showLabel="Show more" hideLabel="Hide">
@@ -155,16 +221,9 @@ const StyckerSpecific = () => {
             <DefaultUserCardImage id={data?.ownerId} />
             <h3>Who's interested?</h3>
             <SimpleGrid cols={3}>
-              {JSON.stringify(data?.interested)}
-              <UserButton {...mockData} />
-              <UserButton {...mockData} />
-              <UserButton {...mockData} />
-
-              <UserButton {...mockData} />
-              <UserButton {...mockData} />
-              <UserButton {...mockData} />
-              <UserButton {...mockData} />
-              <UserButton {...mockData} />
+              {data?.interested?.map((id) => {
+                return <DefaultUserButton key={id} id={id} />;
+              })}
               <UserButton {...mockData} />
             </SimpleGrid>
           </Container>
