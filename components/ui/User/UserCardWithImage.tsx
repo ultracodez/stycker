@@ -1,4 +1,13 @@
-import { createStyles, Card, Avatar, Text, Group, Button } from '@mantine/core';
+import {
+  createStyles,
+  Card,
+  Avatar,
+  Text,
+  Group,
+  Button,
+  Box
+} from '@mantine/core';
+import { useEffect, useState } from 'react';
 
 const useStyles = createStyles((theme) => ({
   card: {
@@ -30,6 +39,16 @@ export function UserCardImage({
 }: UserCardImageProps) {
   const { classes, theme } = useStyles();
 
+  const [randomColor, setRandomColor] = useState('#FFFFFF');
+
+  useEffect(() => {
+    setRandomColor(
+      '#000000'.replace(/0/g, function () {
+        return (~~(Math.random() * 16)).toString(16);
+      })
+    );
+  }, []);
+
   const items = stats.map((stat) => (
     <div key={stat.label}>
       <Text align="center" size="lg" weight={500}>
@@ -43,7 +62,16 @@ export function UserCardImage({
 
   return (
     <Card withBorder p="xl" radius="md" className={classes.card}>
-      <Card.Section sx={{ backgroundImage: `url(${image})`, height: 140 }} />
+      <Card.Section>
+        <Box
+          sx={{
+            backgroundColor: image?.includes('http')
+              ? randomColor
+              : image ?? randomColor,
+            height: 100
+          }}
+        ></Box>
+      </Card.Section>
       <Avatar
         size={80}
         radius={80}

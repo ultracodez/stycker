@@ -63,7 +63,8 @@ const StyckerSpecific = () => {
       link: item.link,
       createdAt: new Date(item.created_at),
       funding: item.funding_acquired,
-      ownerId: item.owner_id
+      ownerId: item.owner_id,
+      interested: item.interested
     });
     setIsLoading(false);
   }
@@ -154,6 +155,14 @@ const StyckerSpecific = () => {
             <DefaultUserCardImage id={data?.ownerId} />
             <h3>Who's interested?</h3>
             <SimpleGrid cols={3}>
+              {JSON.stringify(data?.interested)}
+              <UserButton {...mockData} />
+              <UserButton {...mockData} />
+              <UserButton {...mockData} />
+
+              <UserButton {...mockData} />
+              <UserButton {...mockData} />
+              <UserButton {...mockData} />
               <UserButton {...mockData} />
               <UserButton {...mockData} />
               <UserButton {...mockData} />
