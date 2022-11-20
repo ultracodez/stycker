@@ -6,6 +6,7 @@ import React, { useState } from 'react';
 import { getStripe } from '@/utils/stripe-client';
 import { fetchPostJSON } from '@/utils/api-helpers'; //'../utils/api-helpers';
 import { formatAmountForDisplay } from '@/utils/stripe-helpers';
+import { Button, Center, Group, NumberInput } from '@mantine/core';
 //import * as config from '../config';
 
 const CheckoutForm = () => {
@@ -13,6 +14,7 @@ const CheckoutForm = () => {
   const [input, setInput] = useState({
     customDonation: Math.round(1)
   });
+  const [value, setValue] = useState(0.5);
 
   const handleInputChange: React.ChangeEventHandler<HTMLInputElement> = (e) =>
     setInput({
@@ -50,13 +52,26 @@ const CheckoutForm = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <button
-        className="checkout-style-background"
-        type="submit"
-        disabled={loading}
-      >
-        Donate {formatAmountForDisplay(0.5, 'usd')}
-      </button>
+      <Group>
+        <NumberInput
+          parser={(value: any) =>
+            value.replace('$', '').replace(/[^0-9|\.]+/g, '')
+          }
+          formatter={(value: any) =>
+            !Number.isNaN(parseFloat(value)) ? `$ ${value}` : '$ '
+          }
+          value={value}
+          onChange={(val: any) => setValue(Math.round(val * 100) / 100)}
+        />
+
+        <Button
+          className="checkout-style-background"
+          type="submit"
+          disabled={loading || !value || value < 0.5}
+        >
+          Donate {value ? formatAmountForDisplay(value, 'usd') : '$0'}
+        </Button>
+      </Group>
     </form>
   );
 };

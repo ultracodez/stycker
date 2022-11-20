@@ -193,12 +193,15 @@ const StyckerSpecific = () => {
                     Promote
                   </Menu.Item>
 
-                  <Menu.Item
-                    onClick={() => {}}
-                    icon={<IconReceipt2 size={16} />}
-                  >
-                    Donate
-                  </Menu.Item>
+                  <Link href={`/checkout?type=donate&styckerId=${id}`} passHref>
+                    <Menu.Item
+                      component="a"
+                      onClick={() => {}}
+                      icon={<IconReceipt2 size={16} />}
+                    >
+                      Donate
+                    </Menu.Item>
+                  </Link>
                 </Menu.Dropdown>
               </Menu>
             </Group>
