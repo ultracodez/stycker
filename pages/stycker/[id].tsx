@@ -27,6 +27,8 @@ import { useEffect, useState } from 'react';
 import {
   IconArrowsLeftRight,
   IconCash,
+  IconClick,
+  IconCursorText,
   IconMessageCircle,
   IconPhoto,
   IconPointer,
@@ -42,6 +44,7 @@ import { UserCardImage } from '@/components/ui/User/UserCardWithImage';
 import { DefaultUserCardImage } from '@/components/ui/User/DefaultUserCardWithImage';
 import { mockData, UserButton } from '@/components/ui/User/UserButton';
 import { DefaultUserButton } from '@/components/ui/User/DefaultUserButton';
+import { showNotification } from '@mantine/notifications';
 
 const StyckerSpecific = () => {
   const router = useRouter();
@@ -74,6 +77,10 @@ const StyckerSpecific = () => {
         .eq('id', id)
         .single()
     ).data;
+    if (!item) {
+      window.location.href = '/404';
+      return;
+    }
     setData({
       id: item.id,
       title: item.title,
@@ -95,6 +102,14 @@ const StyckerSpecific = () => {
     if (id) fetchData();
   }, []);
 
+  async function isStillReadyForUpdate() {
+    supabaseClient.from('styckerBoard').update({});
+  }
+
+  useEffect(() => {
+    setTimeout(isStillReadyForUpdate, 30000);
+  }, [starred, interested]);
+
   return (
     <>
       {
@@ -110,6 +125,14 @@ const StyckerSpecific = () => {
                     variant="subtle"
                     compact
                     onClick={() => {
+                      if (!starred) {
+                        showNotification({
+                          title: 'Starred',
+                          message: ':)',
+                          icon: <IconStar />,
+                          color: 'yellow'
+                        });
+                      }
                       setStarred(!starred);
                     }}
                     leftIcon={<IconStar />}
@@ -124,6 +147,15 @@ const StyckerSpecific = () => {
                     variant="subtle"
                     compact
                     onClick={() => {
+                      if (!interested) {
+                        showNotification({
+                          title: 'Interested',
+                          message:
+                            "You've been added to the interested list, and the owner has been notified.",
+                          icon: <IconClick />,
+                          color: 'indigo'
+                        });
+                      }
                       setInterested(!interested);
                     }}
                     leftIcon={<IconPointer />}
@@ -173,6 +205,7 @@ const StyckerSpecific = () => {
             ) : undefined}
             <Group position="apart">
               <h1>{data?.title}</h1>
+              {/*
               <Menu shadow="md" width={200}>
                 <Menu.Target>
                   <Button
@@ -204,12 +237,15 @@ const StyckerSpecific = () => {
                   </Link>
                 </Menu.Dropdown>
               </Menu>
+              
+                  */}
             </Group>
             <Group position="apart">
               <Spoiler maxHeight={120} showLabel="Show more" hideLabel="Hide">
                 {/* Content here */}
                 <p>{data?.description}</p>
               </Spoiler>
+              {/*}
               <Text c={colorScheme === 'dark' ? 'teal.4' : 'teal.6'}>
                 <Center>
                   <ThemeIcon
@@ -221,7 +257,7 @@ const StyckerSpecific = () => {
                   </ThemeIcon>
                   ${data?.funding}
                 </Center>
-              </Text>
+                </Text>*/}
             </Group>
             <h2>Original Poster</h2>
             <DefaultUserCardImage id={data?.ownerId} />
