@@ -34,7 +34,8 @@ export default function IndexPage() {
         image: { src: item.image, alt: item.imageAlt },
         link: item.link,
         createdAt: new Date(item.created_at),
-        funding: item.funding_acquired
+        funding: item.funding_acquired,
+        ownerId: item.owner_id
       });
     });
     setData(newData);

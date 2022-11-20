@@ -24,6 +24,7 @@ export interface StyckerCardProps {
   link?: string;
   createdAt: Date;
   funding?: number;
+  ownerId: any;
 }
 
 export interface StyckerImage {

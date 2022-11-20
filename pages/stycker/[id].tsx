@@ -10,6 +10,7 @@ import {
   Group,
   LoadingOverlay,
   Paper,
+  SimpleGrid,
   Spoiler,
   Text,
   ThemeIcon,
@@ -22,6 +23,9 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { IconCash } from '@tabler/icons';
+import { UserCardImage } from '@/components/ui/User/UserCardWithImage';
+import { DefaultUserCardImage } from '@/components/ui/User/DefaultUserCardWithImage';
+import { mockData, UserButton } from '@/components/ui/User/UserButton';
 
 const StyckerSpecific = () => {
   const router = useRouter();
@@ -58,7 +62,8 @@ const StyckerSpecific = () => {
       image: { src: item.image, alt: item.imageAlt },
       link: item.link,
       createdAt: new Date(item.created_at),
-      funding: item.funding_acquired
+      funding: item.funding_acquired,
+      ownerId: item.owner_id
     });
     setIsLoading(false);
   }
@@ -81,7 +86,7 @@ const StyckerSpecific = () => {
                   sx={(theme) => ({
                     backgroundImage: theme.fn.gradient({
                       from:
-                        theme.colorScheme === 'dark' ? '#2D095F' : '#F6F1FE', //#8338ec
+                        theme.colorScheme === 'dark' ? '#2D094F' : '#F6F1FE', //#8338ec
                       to: theme.colorScheme === 'dark' ? '#2E053A' : '#F1F4FE', //'#C239ED' : '#3969ED'
                       deg: 45
                     }),
@@ -145,6 +150,14 @@ const StyckerSpecific = () => {
                 </Center>
               </Text>
             </Group>
+            <h2>Original Poster</h2>
+            <DefaultUserCardImage id={data?.ownerId} />
+            <h3>Who's interested?</h3>
+            <SimpleGrid cols={3}>
+              <UserButton {...mockData} />
+              <UserButton {...mockData} />
+              <UserButton {...mockData} />
+            </SimpleGrid>
           </Container>
         )
       }
