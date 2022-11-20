@@ -153,6 +153,3 @@ const StyckerSpecific = () => {
 };
 
 export default StyckerSpecific;
-function convertRemToPixels(rem) {
-  return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
-}
